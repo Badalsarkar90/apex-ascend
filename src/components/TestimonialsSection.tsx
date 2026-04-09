@@ -1,36 +1,15 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { gsap } from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
-
-gsap.registerPlugin(ScrollTrigger);
 
 const testimonials = [
-  { quote: "Marcus doesn't just advise — he transforms the way you think about business. In 6 months, my revenue tripled.", name: "Sarah Chen", title: "CEO, TechBridge Solutions" },
-  { quote: "The mastermind group changed everything. The network alone is worth 10x the investment. Marcus is the real deal.", name: "David Okafor", title: "Founder, Scale Dynamics" },
+  { quote: "Adam doesn't just advise — he transforms the way you think about business. In 6 months, my revenue tripled.", name: "Sarah Chen", title: "CEO, TechBridge Solutions" },
+  { quote: "The mastermind group changed everything. The network alone is worth 10x the investment. Adam is the real deal.", name: "David Okafor", title: "Founder, Scale Dynamics" },
   { quote: "His strategic vision turned our struggling startup into a market leader. Genuinely brilliant and incredibly generous.", name: "Elena Rossi", title: "COO, Meridian Health" },
-  { quote: "I've worked with dozens of consultants. Marcus is in a completely different league. Results speak for themselves.", name: "James Whitfield", title: "Managing Director, Whitfield Capital" },
+  { quote: "I've worked with dozens of consultants. Adam is in a completely different league. Results speak for themselves.", name: "James Whitfield", title: "Managing Director, Whitfield Capital" },
 ];
 
 const TestimonialsSection = () => {
-  const ref = useRef<HTMLElement>(null);
   const [active, setActive] = useState(0);
-
-  useEffect(() => {
-    if (!ref.current) return;
-    const ctx = gsap.context(() => {
-      gsap.fromTo(
-        ".testimonial-container",
-        { opacity: 0, y: 50 },
-        {
-          opacity: 1, y: 0,
-          duration: 0.8, ease: "power3.out",
-          scrollTrigger: { trigger: ref.current, start: "top 80%" },
-        }
-      );
-    }, ref);
-    return () => ctx.revert();
-  }, []);
 
   useEffect(() => {
     const timer = setInterval(() => setActive((a) => (a + 1) % testimonials.length), 5000);
@@ -38,17 +17,35 @@ const TestimonialsSection = () => {
   }, []);
 
   return (
-    <section id="testimonials" ref={ref} className="section-padding relative">
+    <section id="testimonials" className="section-padding relative">
       <div className="absolute inset-0 bg-gradient-to-b from-transparent via-primary/[0.02] to-transparent" />
       <div className="max-w-4xl mx-auto relative">
         <div className="text-center mb-16">
-          <p className="text-primary text-sm tracking-[0.3em] uppercase mb-4 font-medium">Testimonials</p>
-          <h2 className="text-4xl md:text-5xl font-display font-bold">
+          <motion.p 
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="text-primary text-sm tracking-[0.3em] uppercase mb-4 font-medium"
+          >
+            Testimonials
+          </motion.p>
+          <motion.h2 
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="text-4xl md:text-5xl font-display font-bold"
+          >
             What They <span className="gold-gradient-text">Say</span>
-          </h2>
+          </motion.h2>
         </div>
 
-        <div className="testimonial-container glass-card p-10 md:p-14 text-center">
+        <motion.div 
+          initial={{ opacity: 0, scale: 0.95 }}
+          whileInView={{ opacity: 1, scale: 1 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.8 }}
+          className="testimonial-container glass-card p-10 md:p-14 text-center"
+        >
           <svg className="w-10 h-10 text-primary/30 mx-auto mb-8" fill="currentColor" viewBox="0 0 24 24">
             <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z" />
           </svg>
@@ -92,7 +89,7 @@ const TestimonialsSection = () => {
               />
             ))}
           </div>
-        </div>
+        </motion.div>
       </div>
     </section>
   );

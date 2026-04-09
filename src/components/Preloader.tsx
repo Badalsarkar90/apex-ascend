@@ -46,8 +46,8 @@ const Preloader = ({ onComplete }: { onComplete: () => void }) => {
           className="mb-12"
         >
           <span className="font-display text-4xl md:text-5xl font-bold tracking-tight">
-            <span className="gold-gradient-text">MARCUS</span>
-            <span className="text-foreground/60 ml-2">COLE</span>
+            <span className="gold-gradient-text">ADAM</span>
+            <span className="text-foreground/60 ml-2">COHEN</span>
           </span>
         </motion.div>
 

@@ -16,6 +16,10 @@ import ServicesPage from "./pages/ServicesPage";
 import PortfolioPage from "./pages/PortfolioPage";
 import TestimonialsPage from "./pages/TestimonialsPage";
 import ContactPage from "./pages/ContactPage";
+import InsightsPage from "./pages/InsightsPage";
+import InsightDetailPage from "./pages/InsightDetailPage";
+import MediaPage from "./pages/MediaPage";
+import BookingPage from "./pages/BookingPage";
 import NotFound from "./pages/NotFound";
 import { useEffect, useState, useCallback } from "react";
 
@@ -40,6 +44,10 @@ const AppRoutes = () => {
         <Route path="/portfolio" element={<PortfolioPage />} />
         <Route path="/testimonials" element={<TestimonialsPage />} />
         <Route path="/contact" element={<ContactPage />} />
+        <Route path="/insights" element={<InsightsPage />} />
+        <Route path="/insights/:id" element={<InsightDetailPage />} />
+        <Route path="/media" element={<MediaPage />} />
+        <Route path="/book" element={<BookingPage />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
     </AnimatePresence>

@@ -3,9 +3,10 @@ import AboutSection from "@/components/AboutSection";
 import StatsSection from "@/components/StatsSection";
 import ServicesSection from "@/components/ServicesSection";
 import ProjectsSection from "@/components/ProjectsSection";
-import PinnedStorySection from "@/components/PinnedStorySection";
+
 import TestimonialsSection from "@/components/TestimonialsSection";
 import ContactSection from "@/components/ContactSection";
+import CallToAction from "@/components/CallToAction";
 import PageTransition from "@/components/PageTransition";
 
 const Index = () => (
@@ -13,10 +14,11 @@ const Index = () => (
     <HeroSection />
     <AboutSection />
     <StatsSection />
-    <PinnedStorySection />
+
     <ServicesSection />
     <ProjectsSection />
     <TestimonialsSection />
+    <CallToAction />
     <ContactSection />
   </PageTransition>
 );

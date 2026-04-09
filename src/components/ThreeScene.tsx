@@ -1,7 +1,8 @@
 import { useRef, useMemo } from "react";
-import { Canvas, useFrame, useThree } from "@react-three/fiber";
+import { Canvas, useFrame, useThree, useLoader } from "@react-three/fiber";
 import { Float, MeshDistortMaterial } from "@react-three/drei";
 import * as THREE from "three";
+import { useTheme } from "@/contexts/ThemeContext";
 
 const MouseParallax = ({ children }: { children: React.ReactNode }) => {
   const groupRef = useRef<THREE.Group>(null);
@@ -20,33 +21,25 @@ const MouseParallax = ({ children }: { children: React.ReactNode }) => {
   return <group ref={groupRef}>{children}</group>;
 };
 
-const FloatingOrb = () => {
+const LegendPlane = () => {
+  const { theme } = useTheme();
+  const texture = useLoader(THREE.TextureLoader, "/mm.png");
   const meshRef = useRef<THREE.Mesh>(null);
 
-  useFrame(({ clock }) => {
-    if (meshRef.current) {
-      meshRef.current.rotation.x = clock.getElapsedTime() * 0.15;
-      meshRef.current.rotation.y = clock.getElapsedTime() * 0.2;
-    }
-  });
-
-  const goldColor = useMemo(() => new THREE.Color("hsl(38, 80%, 55%)"), []);
-  const darkGold = useMemo(() => new THREE.Color("hsl(38, 90%, 30%)"), []);
+  const isDark = theme === "dark";
 
   return (
-    <Float speed={1.5} rotationIntensity={0.4} floatIntensity={1.2}>
-      <mesh ref={meshRef}>
-        <icosahedronGeometry args={[1.8, 4]} />
-        <MeshDistortMaterial
-          color={goldColor}
-          emissive={darkGold}
-          emissiveIntensity={0.3}
-          roughness={0.2}
-          metalness={0.9}
-          distort={0.25}
-          speed={2}
+    <Float speed={2} rotationIntensity={0.5} floatIntensity={0.8}>
+      <mesh ref={meshRef} position={[0, 0, 0]}>
+        <planeGeometry args={[3.2, 4.5]} />
+        <meshStandardMaterial
+          map={texture}
           transparent
-          opacity={0.7}
+          opacity={isDark ? 0.85 : 0.95}
+          roughness={0.3}
+          metalness={isDark ? 0.4 : 0.1}
+          emissive={new THREE.Color("hsl(38, 80%, 55%)")}
+          emissiveIntensity={isDark ? 0.15 : 0.05}
         />
       </mesh>
     </Float>
@@ -54,12 +47,15 @@ const FloatingOrb = () => {
 };
 
 const SmallOrbs = () => {
+  const { theme } = useTheme();
+  const isDark = theme === "dark";
+  
   const positions = useMemo(
     () =>
-      Array.from({ length: 6 }, () => [
+      Array.from({ length: 8 }, () => [
+        (Math.random() - 0.5) * 10,
         (Math.random() - 0.5) * 8,
-        (Math.random() - 0.5) * 6,
-        (Math.random() - 0.5) * 4 - 2,
+        (Math.random() - 0.5) * 5 - 2,
       ] as [number, number, number]),
     []
   );
@@ -67,15 +63,15 @@ const SmallOrbs = () => {
   return (
     <>
       {positions.map((pos, i) => (
-        <Float key={i} speed={1 + i * 0.3} floatIntensity={0.5}>
+        <Float key={i} speed={1.5 + i * 0.2} floatIntensity={1}>
           <mesh position={pos}>
-            <sphereGeometry args={[0.08 + Math.random() * 0.1, 8, 8]} />
+            <sphereGeometry args={[0.06 + Math.random() * 0.08, 16, 16]} />
             <meshStandardMaterial
               color="hsl(38, 80%, 55%)"
               emissive="hsl(38, 80%, 55%)"
-              emissiveIntensity={0.5}
+              emissiveIntensity={isDark ? 0.6 : 0.3}
               transparent
-              opacity={0.4}
+              opacity={isDark ? 0.5 : 0.3}
             />
           </mesh>
         </Float>
@@ -84,21 +80,40 @@ const SmallOrbs = () => {
   );
 };
 
+const SceneContent = () => {
+  const { theme } = useTheme();
+  const isDark = theme === "dark";
+
+  return (
+    <>
+      <ambientLight intensity={isDark ? 0.4 : 0.8} />
+      <directionalLight 
+        position={[5, 5, 5]} 
+        intensity={isDark ? 1.2 : 0.8} 
+        color={isDark ? "hsl(38, 60%, 70%)" : "white"} 
+      />
+      <pointLight 
+        position={[-3, -2, 2]} 
+        intensity={isDark ? 0.8 : 0.4} 
+        color="hsl(38, 80%, 55%)" 
+      />
+      <MouseParallax>
+        <LegendPlane />
+        <SmallOrbs />
+      </MouseParallax>
+    </>
+  );
+};
+
 const ThreeScene = () => (
   <div className="absolute inset-0 pointer-events-none" style={{ zIndex: 1 }}>
     <Canvas
-      camera={{ position: [0, 0, 6], fov: 50 }}
+      camera={{ position: [0, 0, 8], fov: 45 }}
       dpr={[1, 1.5]}
       gl={{ antialias: true, alpha: true, powerPreference: "high-performance" }}
       style={{ background: "transparent" }}
     >
-      <ambientLight intensity={0.3} />
-      <directionalLight position={[5, 5, 5]} intensity={0.8} color="hsl(38, 60%, 70%)" />
-      <pointLight position={[-3, -2, 2]} intensity={0.4} color="hsl(38, 80%, 55%)" />
-      <MouseParallax>
-        <FloatingOrb />
-        <SmallOrbs />
-      </MouseParallax>
+      <SceneContent />
     </Canvas>
   </div>
 );

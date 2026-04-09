@@ -1,93 +1,220 @@
-import { useEffect, useRef } from "react";
-import { gsap } from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { motion } from "framer-motion";
 import PageTransition from "@/components/PageTransition";
 import MagneticButton from "@/components/MagneticButton";
 
-gsap.registerPlugin(ScrollTrigger);
-
-const services = [
-  { icon: "💎", title: "Private Consulting", description: "One-on-one strategic sessions designed for high-net-worth entrepreneurs ready to scale beyond limits. Deep-dive analysis, actionable roadmaps, and ongoing accountability.", tag: "Premium", price: "From $5,000/mo" },
-  { icon: "📈", title: "Investment Advisory", description: "Data-driven investment strategies across real estate, tech startups, and emerging markets. Portfolio diversification and risk management tailored to your goals.", tag: "Exclusive", price: "By Application" },
-  { icon: "🎓", title: "Elite Mastermind", description: "Join a curated circle of ambitious leaders. Weekly strategy sessions, annual retreats in exclusive locations, and a lifetime network of high-performers.", tag: "By Invitation", price: "$25,000/year" },
-  { icon: "🚀", title: "Venture Studio", description: "We co-build, fund, and scale your next venture from idea to market dominance. Full operational support, marketing, and growth infrastructure.", tag: "Partnership", price: "Equity Partnership" },
+const servicePillars = [
+  { 
+    icon: "🏠", 
+    title: "Real Estate Investment", 
+    description: "Strategic acquisition and management of high-yield commercial and residential portfolios.", 
+    outcome: "Build a recession-proof property empire with passive cash flow.",
+    benefits: ["Portfolio Diversification", "Market Analysis", "Risk Mitigation"],
+    tag: "Wealth Creation"
+  },
+  { 
+    icon: "💸", 
+    title: "Private Lending", 
+    description: "Custom capital solutions and liquidity for ambitious developers and high-growth ventures.", 
+    outcome: "Access the leverage needed to close your most ambitious deals.",
+    benefits: ["Swift Approvals", "Flexible Terms", "Asset-Backed Funding"],
+    tag: "Capital Access"
+  },
+  { 
+    icon: "🧠", 
+    title: "Business Consulting", 
+    description: "Deep-dive operational scaling and strategic mastery for founders ready to 10x their growth.", 
+    outcome: "A battle-tested roadmap for undisputed market dominance.",
+    benefits: ["Scalability Systems", "Revenue Audits", "Elite Leadership"],
+    tag: "Growth Mastery"
+  },
+  { 
+    icon: "🤝", 
+    title: "Deal Structuring", 
+    description: "Navigating high-stakes negotiation and complex acquisitions with surgical precision.", 
+    outcome: "Optimize every term to maximize value and minimize exposure.",
+    benefits: ["Strategic Negotiation", "Tax Efficiency", "Equity Optimization"],
+    tag: "Executive Strategy"
+  },
 ];
 
-const process = [
-  { step: "01", title: "Discovery", text: "Deep analysis of your current position, goals, and untapped opportunities." },
-  { step: "02", title: "Strategy", text: "Custom roadmap designed around your unique strengths and market position." },
-  { step: "03", title: "Execution", text: "Hands-on implementation with weekly check-ins and real-time adjustments." },
-  { step: "04", title: "Scale", text: "Systematic growth through proven frameworks and strategic partnerships." },
+const performanceMetrics = [
+  { val: "150+", label: "Deals Closed" },
+  { val: "22%", label: "Average ROI" },
+  { val: "$500M+", label: "Transactional Volume" },
+  { val: "12+", label: "Global Markets" },
 ];
 
 const ServicesPage = () => {
-  const ref = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    if (!ref.current) return;
-    const ctx = gsap.context(() => {
-      gsap.fromTo(".services-hero-reveal", { opacity: 0, y: 60, filter: "blur(6px)" }, { opacity: 1, y: 0, filter: "blur(0px)", duration: 0.9, stagger: 0.15, ease: "power3.out" });
-      gsap.fromTo(".service-detail-card", { opacity: 0, y: 50 }, { opacity: 1, y: 0, duration: 0.7, stagger: 0.12, ease: "power3.out", scrollTrigger: { trigger: ".services-grid", start: "top 80%" } });
-      gsap.fromTo(".process-step", { opacity: 0, x: -40 }, { opacity: 1, x: 0, duration: 0.6, stagger: 0.15, ease: "power3.out", scrollTrigger: { trigger: ".process-section", start: "top 80%" } });
-    }, ref);
-    return () => ctx.revert();
-  }, []);
-
   return (
     <PageTransition>
-      <div ref={ref}>
-        <section className="pt-32 pb-20 section-padding">
-          <div className="max-w-5xl mx-auto text-center">
-            <p className="services-hero-reveal text-primary text-sm tracking-[0.3em] uppercase mb-4 font-medium">Services</p>
-            <h1 className="services-hero-reveal text-5xl md:text-6xl lg:text-7xl font-display font-bold leading-tight mb-6">
-              Elevate Your <span className="gold-gradient-text">Game</span>
-            </h1>
-            <p className="services-hero-reveal text-lg text-muted-foreground max-w-2xl mx-auto">
-              Premium services designed for ambitious entrepreneurs who are ready to operate at the highest level.
-            </p>
+      <div className="bg-background">
+        {/* Hero Section */}
+        <section className="pt-36 pb-24 px-6 relative overflow-hidden">
+          <div className="absolute inset-0 bg-gradient-to-b from-primary/[0.08] to-transparent pointer-events-none" />
+          <div className="max-w-5xl mx-auto text-center relative z-10">
+            <motion.p 
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              className="text-primary text-sm tracking-[0.4em] uppercase mb-6 font-medium"
+            >
+              The Architecture of Success
+            </motion.p>
+            <motion.h1 
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] }}
+              className="text-6xl md:text-7xl lg:text-8xl font-display font-bold leading-tight mb-8"
+            >
+              How Adam Cohen <br />
+              <span className="gold-gradient-text">Grows Your Empire.</span>
+            </motion.h1>
+            <motion.p 
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 1, delay: 0.1 }}
+              className="text-xl text-muted-foreground max-w-2xl mx-auto font-light leading-relaxed mb-12"
+            >
+              We don't just provide services; we engineer transformations. 
+              Our frameworks are designed for those who refuse to settle for ordinary results.
+            </motion.p>
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.3 }}
+            >
+              <MagneticButton as="a" href="/book" className="hero-btn !px-12 !py-6 text-lg">
+                Book a Strategy Call
+              </MagneticButton>
+            </motion.div>
           </div>
         </section>
 
-        <section className="section-padding">
-          <div className="services-grid max-w-7xl mx-auto grid md:grid-cols-2 gap-8">
-            {services.map((s) => (
-              <div key={s.title} className="service-detail-card glass-card p-10 group hover:border-primary/30 hover:-translate-y-2 transition-all duration-500">
-                <div className="flex items-start justify-between mb-6">
-                  <span className="text-5xl">{s.icon}</span>
-                  <span className="text-xs tracking-widest uppercase text-primary/70 border border-primary/20 px-3 py-1 rounded-full">{s.tag}</span>
-                </div>
-                <h3 className="text-2xl font-display font-bold mb-3 group-hover:text-primary transition-colors">{s.title}</h3>
-                <p className="text-muted-foreground leading-relaxed mb-6">{s.description}</p>
-                <div className="flex items-center justify-between">
-                  <span className="text-sm font-semibold text-primary">{s.price}</span>
-                  <MagneticButton as="a" href="/contact" className="hero-btn-outline text-xs py-2 px-5">
-                    Apply Now
+        {/* Performance Metrics Section */}
+        <section className="py-20 px-6 border-y border-primary/10 bg-secondary/10">
+          <div className="max-w-7xl mx-auto">
+            <div className="grid grid-cols-2 lg:grid-cols-4 gap-12 text-center">
+              {performanceMetrics.map((stat, i) => (
+                <motion.div
+                  key={stat.label}
+                  initial={{ opacity: 0, scale: 0.9 }}
+                  whileInView={{ opacity: 1, scale: 1 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: i * 0.1 }}
+                >
+                  <p className="text-5xl font-display font-bold gold-gradient-text mb-3">{stat.val}</p>
+                  <p className="text-xs tracking-widest uppercase text-muted-foreground font-medium">{stat.label}</p>
+                </motion.div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* Services Pillars */}
+        <section className="section-padding px-6">
+          <div className="max-w-7xl mx-auto">
+            <div className="grid lg:grid-cols-2 gap-10">
+              {servicePillars.map((s, i) => (
+                <motion.div 
+                  key={s.title}
+                  initial={{ opacity: 0, y: 40 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, margin: "-100px" }}
+                  transition={{ duration: 0.8, delay: i * 0.1 }}
+                  whileHover={{ y: -10 }}
+                  className="glass-card p-12 md:p-14 group border border-primary/10 bg-background/40 hover:border-primary/40 hover:shadow-[0_0_50px_-12px_rgba(212,175,55,0.15)] transition-all duration-500 flex flex-col h-full"
+                >
+                  <div className="flex items-start justify-between mb-10">
+                    <span className="text-6xl grayscale group-hover:grayscale-0 transition-all duration-700">{s.icon}</span>
+                    <span className="text-[10px] tracking-[0.3em] uppercase text-primary/70 border border-primary/20 px-4 py-1.5 rounded-full font-bold">
+                      {s.tag}
+                    </span>
+                  </div>
+                  
+                  <h3 className="text-3xl font-display font-bold mb-4 group-hover:text-primary transition-colors duration-300">
+                    {s.title}
+                  </h3>
+                  <p className="text-muted-foreground leading-relaxed mb-8 font-light italic">
+                    {s.description}
+                  </p>
+
+                  <div className="bg-primary/5 rounded-2xl p-6 mb-8 border-l-4 border-primary/30">
+                    <p className="text-sm font-semibold text-primary mb-1 uppercase tracking-widest">Expected Outcome</p>
+                    <p className="text-foreground font-medium">{s.outcome}</p>
+                  </div>
+
+                  <ul className="space-y-4 mb-10 flex-grow">
+                    {s.benefits.map((benefit) => (
+                      <li key={benefit} className="flex items-center gap-3 text-sm text-muted-foreground">
+                        <div className="w-1.5 h-1.5 rounded-full bg-primary" />
+                        {benefit}
+                      </li>
+                    ))}
+                  </ul>
+
+                  <div className="pt-8 border-t border-primary/5">
+                    <MagneticButton as="a" href="/book" className="hero-btn-outline w-full !py-4 text-sm font-bold">
+                      Learn More & Book Call
+                    </MagneticButton>
+                  </div>
+                </motion.div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* Mini Testimonial */}
+        <section className="section-padding px-6 relative overflow-hidden">
+          <div className="max-w-4xl mx-auto text-center relative z-10">
+            <motion.div
+              initial={{ opacity: 0, scale: 0.95 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              viewport={{ once: true }}
+              className="space-y-8"
+            >
+              <svg className="w-12 h-12 text-primary/20 mx-auto" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z" />
+              </svg>
+              <h2 className="text-3xl md:text-4xl font-display font-medium italic leading-relaxed text-foreground/90">
+                "Adam's ability to see the chessboard 10 steps ahead is uncanny. 
+                His deal structuring alone saved us $4M in exposure."
+              </h2>
+              <div>
+                <p className="font-display font-bold text-lg">Marcus Thornton</p>
+                <p className="text-primary text-sm uppercase tracking-widest font-medium">CEO, Prime Acquisitions</p>
+              </div>
+            </motion.div>
+          </div>
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[400px] bg-primary/5 blur-[120px] -z-10 rounded-full" />
+        </section>
+
+        {/* Enhanced Conversion Footer */}
+        <section className="section-padding px-6">
+          <div className="max-w-5xl mx-auto">
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              className="glass-card p-16 md:p-24 text-center border border-primary/20 bg-gradient-to-br from-primary/[0.05] via-transparent to-primary/10 relative overflow-hidden"
+            >
+              <div className="relative z-10">
+                <h2 className="text-4xl md:text-6xl font-display font-bold mb-8 leading-tight">
+                  Ready to Build Your <br />
+                  <span className="gold-gradient-text">Own Empire?</span>
+                </h2>
+                <p className="text-lg text-muted-foreground mb-12 max-w-xl mx-auto font-light">
+                  Spots for private consulting and board positions are highly limited. 
+                  Apply today to see if your vision aligns with our ecosystem.
+                </p>
+                <div className="flex flex-col sm:flex-row gap-6 justify-center">
+                  <MagneticButton as="a" href="/book" className="hero-btn !px-12 !py-6 text-lg">
+                    Book a Call
+                  </MagneticButton>
+                  <MagneticButton as="a" href="/book" className="hero-btn-outline !px-12 !py-6 text-lg">
+                    Get Consultation
                   </MagneticButton>
                 </div>
               </div>
-            ))}
-          </div>
-        </section>
-
-        <section className="process-section section-padding">
-          <div className="max-w-5xl mx-auto">
-            <div className="text-center mb-16">
-              <p className="text-primary text-sm tracking-[0.3em] uppercase mb-4 font-medium">How It Works</p>
-              <h2 className="text-4xl md:text-5xl font-display font-bold">
-                The <span className="gold-gradient-text">Process</span>
-              </h2>
-            </div>
-            <div className="space-y-8">
-              {process.map((p) => (
-                <div key={p.step} className="process-step glass-card p-8 flex items-start gap-8 group hover:border-primary/30 transition-all duration-500">
-                  <span className="text-4xl font-display font-bold gold-gradient-text shrink-0">{p.step}</span>
-                  <div>
-                    <h3 className="text-xl font-display font-bold mb-2 group-hover:text-primary transition-colors">{p.title}</h3>
-                    <p className="text-muted-foreground">{p.text}</p>
-                  </div>
-                </div>
-              ))}
-            </div>
+            </motion.div>
           </div>
         </section>
       </div>
