@@ -14,12 +14,17 @@ const navLinks = [
 
 const Navbar = () => {
   const [scrolled, setScrolled] = useState(false);
+  const [scrollProgress, setScrollProgress] = useState(0);
   const [mobileOpen, setMobileOpen] = useState(false);
   const location = useLocation();
 
   useEffect(() => {
-    const handler = () => setScrolled(window.scrollY > 50);
-    window.addEventListener("scroll", handler);
+    const handler = () => {
+      setScrolled(window.scrollY > 50);
+      const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+      setScrollProgress(docHeight > 0 ? (window.scrollY / docHeight) * 100 : 0);
+    };
+    window.addEventListener("scroll", handler, { passive: true });
     return () => window.removeEventListener("scroll", handler);
   }, []);
 
@@ -79,6 +84,14 @@ const Navbar = () => {
               <span className={`block w-6 h-0.5 bg-foreground transition-all duration-300 ${mobileOpen ? "-rotate-45 -translate-y-2" : ""}`} />
             </button>
           </div>
+        </div>
+
+        {/* Scroll progress bar */}
+        <div className="absolute bottom-0 left-0 right-0 h-[2px] bg-transparent">
+          <div
+            className="h-full gold-gradient-bg transition-[width] duration-100 ease-out"
+            style={{ width: `${scrollProgress}%` }}
+          />
         </div>
       </motion.nav>
 

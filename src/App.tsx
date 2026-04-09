@@ -8,6 +8,8 @@ import { ThemeProvider } from "@/contexts/ThemeContext";
 import LenisProvider from "@/components/LenisProvider";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import CustomCursor from "@/components/CustomCursor";
+import Preloader from "@/components/Preloader";
 import Index from "./pages/Index";
 import AboutPage from "./pages/AboutPage";
 import ServicesPage from "./pages/ServicesPage";
@@ -15,7 +17,7 @@ import PortfolioPage from "./pages/PortfolioPage";
 import TestimonialsPage from "./pages/TestimonialsPage";
 import ContactPage from "./pages/ContactPage";
 import NotFound from "./pages/NotFound";
-import { useEffect } from "react";
+import { useEffect, useState, useCallback } from "react";
 
 const queryClient = new QueryClient();
 
@@ -44,23 +46,30 @@ const AppRoutes = () => {
   );
 };
 
-const App = () => (
-  <QueryClientProvider client={queryClient}>
-    <ThemeProvider>
-      <TooltipProvider>
-        <Toaster />
-        <Sonner />
-        <BrowserRouter>
-          <LenisProvider>
-            <ScrollToTop />
-            <Navbar />
-            <AppRoutes />
-            <Footer />
-          </LenisProvider>
-        </BrowserRouter>
-      </TooltipProvider>
-    </ThemeProvider>
-  </QueryClientProvider>
-);
+const App = () => {
+  const [loading, setLoading] = useState(true);
+  const handleComplete = useCallback(() => setLoading(false), []);
+
+  return (
+    <QueryClientProvider client={queryClient}>
+      <ThemeProvider>
+        <TooltipProvider>
+          <Toaster />
+          <Sonner />
+          {loading && <Preloader onComplete={handleComplete} />}
+          <BrowserRouter>
+            <LenisProvider>
+              <CustomCursor />
+              <ScrollToTop />
+              <Navbar />
+              <AppRoutes />
+              <Footer />
+            </LenisProvider>
+          </BrowserRouter>
+        </TooltipProvider>
+      </ThemeProvider>
+    </QueryClientProvider>
+  );
+};
 
 export default App;
