@@ -1,27 +1,24 @@
-import Navbar from "@/components/Navbar";
 import HeroSection from "@/components/HeroSection";
 import AboutSection from "@/components/AboutSection";
 import StatsSection from "@/components/StatsSection";
 import ServicesSection from "@/components/ServicesSection";
 import ProjectsSection from "@/components/ProjectsSection";
+import PinnedStorySection from "@/components/PinnedStorySection";
 import TestimonialsSection from "@/components/TestimonialsSection";
 import ContactSection from "@/components/ContactSection";
-import Footer from "@/components/Footer";
+import PageTransition from "@/components/PageTransition";
 
-const Index = () => {
-  return (
-    <div className="min-h-screen bg-background">
-      <Navbar />
-      <HeroSection />
-      <AboutSection />
-      <StatsSection />
-      <ServicesSection />
-      <ProjectsSection />
-      <TestimonialsSection />
-      <ContactSection />
-      <Footer />
-    </div>
-  );
-};
+const Index = () => (
+  <PageTransition>
+    <HeroSection />
+    <AboutSection />
+    <StatsSection />
+    <PinnedStorySection />
+    <ServicesSection />
+    <ProjectsSection />
+    <TestimonialsSection />
+    <ContactSection />
+  </PageTransition>
+);
 
 export default Index;

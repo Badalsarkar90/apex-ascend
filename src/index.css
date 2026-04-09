@@ -53,6 +53,50 @@
     --sidebar-border: 220 12% 16%;
     --sidebar-ring: 38 80% 55%;
   }
+
+  .light {
+    --background: 40 20% 97%;
+    --foreground: 220 20% 10%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 220 20% 10%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 220 20% 10%;
+
+    --primary: 38 80% 45%;
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 220 10% 92%;
+    --secondary-foreground: 220 15% 30%;
+
+    --muted: 220 10% 95%;
+    --muted-foreground: 220 10% 45%;
+
+    --accent: 38 80% 45%;
+    --accent-foreground: 0 0% 100%;
+
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 220 10% 88%;
+    --input: 220 10% 88%;
+    --ring: 38 80% 45%;
+
+    --gold: 38 80% 45%;
+    --gold-light: 38 60% 60%;
+    --gold-dark: 38 90% 35%;
+    --surface-glass: 0 0% 98%;
+
+    --sidebar-background: 0 0% 98%;
+    --sidebar-foreground: 220 20% 10%;
+    --sidebar-primary: 38 80% 45%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 220 10% 92%;
+    --sidebar-accent-foreground: 220 15% 30%;
+    --sidebar-border: 220 10% 88%;
+    --sidebar-ring: 38 80% 45%;
+  }
 }
 
 @layer base {
@@ -70,7 +114,7 @@
   }
 
   html {
-    scroll-behavior: smooth;
+    scroll-behavior: auto; /* Lenis handles smooth scrolling */
   }
 }
 
@@ -78,6 +122,10 @@
   .glass-card {
     @apply bg-card/50 backdrop-blur-xl border border-border/50 rounded-2xl;
     box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.05);
+  }
+
+  .light .glass-card {
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08), inset 0 1px 0 rgba(255, 255, 255, 0.6);
   }
 
   .gold-gradient-text {
@@ -100,7 +148,6 @@
   .hero-btn {
     @apply px-8 py-4 rounded-xl font-semibold text-sm tracking-wider uppercase;
     @apply gold-gradient-bg text-background;
-    @apply hover:scale-105 active:scale-95;
     @apply transition-all duration-300;
     box-shadow: 0 4px 20px hsl(var(--gold) / 0.3);
   }
@@ -113,7 +160,6 @@
     @apply px-8 py-4 rounded-xl font-semibold text-sm tracking-wider uppercase;
     @apply border border-primary/40 text-primary;
     @apply hover:bg-primary/10 hover:border-primary;
-    @apply hover:scale-105 active:scale-95;
     @apply transition-all duration-300;
   }
 }
