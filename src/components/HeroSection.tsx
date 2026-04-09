@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { gsap } from "gsap";
 import heroBg from "@/assets/hero-bg.jpg";
 import MagneticButton from "./MagneticButton";
@@ -11,18 +11,33 @@ const HeroSection = () => {
   const ctaRef = useRef<HTMLDivElement>(null);
   const scrollRef = useRef<HTMLDivElement>(null);
   const overlayRef = useRef<HTMLDivElement>(null);
+  const videoRef = useRef<HTMLVideoElement>(null);
+  const [videoLoaded, setVideoLoaded] = useState(false);
+
+  // Lazy load video on intersection
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting && videoRef.current) {
+          videoRef.current.src =
+            "https://cdn.coverr.co/videos/coverr-aerial-view-of-city-at-night-1573/1080p.mp4";
+          videoRef.current.load();
+          observer.disconnect();
+        }
+      },
+      { threshold: 0.1 }
+    );
+    if (sectionRef.current) observer.observe(sectionRef.current);
+    return () => observer.disconnect();
+  }, []);
 
   useEffect(() => {
     const ctx = gsap.context(() => {
       const tl = gsap.timeline({ defaults: { ease: "power4.out" } });
 
-      // Overlay reveal
       tl.fromTo(overlayRef.current, { scaleY: 1 }, { scaleY: 0, duration: 1.2, transformOrigin: "top" }, 0);
-
-      // Tagline
       tl.fromTo(taglineRef.current, { opacity: 0, y: 30, filter: "blur(10px)" }, { opacity: 1, y: 0, filter: "blur(0px)", duration: 0.8 }, 0.6);
 
-      // Split text animation - letter by letter
       const headline = headlineRef.current;
       if (headline) {
         const words = headline.querySelectorAll(".hero-word");
@@ -31,25 +46,16 @@ const HeroSection = () => {
           tl.fromTo(
             letters,
             { opacity: 0, y: 80, rotateX: -90, filter: "blur(8px)" },
-            {
-              opacity: 1, y: 0, rotateX: 0, filter: "blur(0px)",
-              duration: 0.6, stagger: 0.03, ease: "back.out(1.7)",
-            },
+            { opacity: 1, y: 0, rotateX: 0, filter: "blur(0px)", duration: 0.6, stagger: 0.03, ease: "back.out(1.7)" },
             0.8 + wi * 0.2
           );
         });
       }
 
-      // Subtitle
       tl.fromTo(subtitleRef.current, { opacity: 0, y: 40, filter: "blur(5px)" }, { opacity: 1, y: 0, filter: "blur(0px)", duration: 0.9 }, 1.6);
-
-      // CTA
       tl.fromTo(ctaRef.current, { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: 0.7 }, 2);
-
-      // Scroll indicator
       tl.fromTo(scrollRef.current, { opacity: 0 }, { opacity: 1, duration: 0.5 }, 2.5);
 
-      // Floating elements parallax
       gsap.to(".hero-float-1", { y: -20, duration: 4, repeat: -1, yoyo: true, ease: "sine.inOut" });
       gsap.to(".hero-float-2", { y: 15, duration: 5, repeat: -1, yoyo: true, ease: "sine.inOut" });
       gsap.to(".hero-float-3", { rotation: 360, duration: 30, repeat: -1, ease: "none" });
@@ -65,10 +71,23 @@ const HeroSection = () => {
       {/* Loading overlay */}
       <div ref={overlayRef} className="absolute inset-0 z-30 bg-background" />
 
-      {/* Background */}
+      {/* Video background with fallback image */}
       <div className="absolute inset-0">
-        <img src={heroBg} alt="" className="w-full h-full object-cover" />
-        <div className="absolute inset-0 bg-background/70" />
+        <img
+          src={heroBg}
+          alt=""
+          className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-1000 ${videoLoaded ? "opacity-0" : "opacity-100"}`}
+        />
+        <video
+          ref={videoRef}
+          autoPlay
+          muted
+          loop
+          playsInline
+          onCanPlayThrough={() => setVideoLoaded(true)}
+          className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-1000 ${videoLoaded ? "opacity-100" : "opacity-0"}`}
+        />
+        <div className="absolute inset-0 bg-background/75" />
         <div className="absolute inset-0 bg-gradient-to-t from-background via-background/40 to-transparent" />
       </div>
 

@@ -1,9 +1,11 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, lazy, Suspense } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import aboutImg from "@/assets/about-portrait.jpg";
 
 gsap.registerPlugin(ScrollTrigger);
+
+const ThreeScene = lazy(() => import("./ThreeScene"));
 
 const AboutSection = () => {
   const sectionRef = useRef<HTMLElement>(null);
@@ -13,7 +15,6 @@ const AboutSection = () => {
     if (!sectionRef.current) return;
 
     const ctx = gsap.context(() => {
-      // Image parallax
       gsap.to(imgRef.current, {
         y: -60,
         ease: "none",
@@ -25,31 +26,23 @@ const AboutSection = () => {
         },
       });
 
-      // Text reveal
       gsap.fromTo(
         ".about-text-reveal",
         { opacity: 0, y: 50, filter: "blur(4px)" },
         {
           opacity: 1, y: 0, filter: "blur(0px)",
           duration: 0.8, stagger: 0.15, ease: "power3.out",
-          scrollTrigger: {
-            trigger: ".about-text-container",
-            start: "top 80%",
-          },
+          scrollTrigger: { trigger: ".about-text-container", start: "top 80%" },
         }
       );
 
-      // Stats stagger
       gsap.fromTo(
         ".about-stat",
         { opacity: 0, y: 30 },
         {
           opacity: 1, y: 0,
           duration: 0.6, stagger: 0.1, ease: "power3.out",
-          scrollTrigger: {
-            trigger: ".about-stats-row",
-            start: "top 85%",
-          },
+          scrollTrigger: { trigger: ".about-stats-row", start: "top 85%" },
         }
       );
     }, sectionRef);
@@ -59,7 +52,12 @@ const AboutSection = () => {
 
   return (
     <section id="about" ref={sectionRef} className="section-padding relative overflow-hidden">
-      <div className="max-w-7xl mx-auto">
+      {/* 3D Background */}
+      <Suspense fallback={null}>
+        <ThreeScene />
+      </Suspense>
+
+      <div className="max-w-7xl mx-auto relative z-10">
         <div className="grid lg:grid-cols-2 gap-16 lg:gap-24 items-center">
           {/* Image */}
           <div className="relative">
