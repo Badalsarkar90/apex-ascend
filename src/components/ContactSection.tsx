@@ -1,45 +1,48 @@
-import { motion, useInView } from "framer-motion";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import { gsap } from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import MagneticButton from "./MagneticButton";
+
+gsap.registerPlugin(ScrollTrigger);
 
 const ContactSection = () => {
-  const ref = useRef(null);
-  const inView = useInView(ref, { once: true, margin: "-100px" });
+  const ref = useRef<HTMLElement>(null);
   const [formData, setFormData] = useState({ name: "", email: "", message: "" });
+
+  useEffect(() => {
+    if (!ref.current) return;
+    const ctx = gsap.context(() => {
+      gsap.fromTo(
+        ".contact-reveal",
+        { opacity: 0, y: 40, filter: "blur(4px)" },
+        {
+          opacity: 1, y: 0, filter: "blur(0px)",
+          duration: 0.8, stagger: 0.15, ease: "power3.out",
+          scrollTrigger: { trigger: ref.current, start: "top 80%" },
+        }
+      );
+    }, ref);
+    return () => ctx.revert();
+  }, []);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    // Handle form submission
   };
 
   return (
-    <section id="contact" className="section-padding relative" ref={ref}>
+    <section id="contact" ref={ref} className="section-padding relative">
       <div className="max-w-4xl mx-auto">
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={inView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.7 }}
-          className="text-center mb-16"
-        >
-          <p className="text-primary text-sm tracking-[0.3em] uppercase mb-4 font-medium">
-            Get In Touch
-          </p>
+        <div className="contact-reveal text-center mb-16">
+          <p className="text-primary text-sm tracking-[0.3em] uppercase mb-4 font-medium">Get In Touch</p>
           <h2 className="text-4xl md:text-5xl font-display font-bold">
-            Let's Create{" "}
-            <span className="gold-gradient-text">Together</span>
+            Let's Create <span className="gold-gradient-text">Together</span>
           </h2>
           <p className="text-muted-foreground mt-4 max-w-lg mx-auto">
-            Ready to take the next step? Whether it's a partnership, investment, or mentorship —
-            I'd love to hear from you.
+            Ready to take the next step? Whether it's a partnership, investment, or mentorship — I'd love to hear from you.
           </p>
-        </motion.div>
+        </div>
 
-        <motion.form
-          initial={{ opacity: 0, y: 30 }}
-          animate={inView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.7, delay: 0.2 }}
-          onSubmit={handleSubmit}
-          className="glass-card p-8 md:p-12 space-y-6"
-        >
+        <form onSubmit={handleSubmit} className="contact-reveal glass-card p-8 md:p-12 space-y-6">
           <div className="grid md:grid-cols-2 gap-6">
             <div>
               <label className="block text-sm text-muted-foreground mb-2 font-medium">Name</label>
@@ -72,10 +75,10 @@ const ContactSection = () => {
               placeholder="Tell me about your vision..."
             />
           </div>
-          <button type="submit" className="hero-btn w-full md:w-auto">
+          <MagneticButton type="submit" className="hero-btn w-full md:w-auto">
             Send Message
-          </button>
-        </motion.form>
+          </MagneticButton>
+        </form>
       </div>
     </section>
   );
