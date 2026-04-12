@@ -3,9 +3,10 @@ import { motion, AnimatePresence } from "framer-motion";
 import useEmblaCarousel from "embla-carousel-react";
 import Autoplay from "embla-carousel-autoplay";
 import { ChevronLeft, ChevronRight } from "lucide-react";
-import adamNetworking from "@/assets/adam-portrait-hero.png";
-import adamSuit from "@/assets/adam-suit-hero.png";
-import adamOffice from "@/assets/adam-office-hero.png";
+import img1 from "@/assets/1.png";
+import img2 from "@/assets/2.jpeg";
+import img3 from "@/assets/3.jpeg";
+import imgMM from "@/assets/mm.png";
 import heroTexture from "@/assets/hero-texture.png";
 
 const slides = [
@@ -13,7 +14,7 @@ const slides = [
     id: 1,
     type: "networking",
     bg: heroTexture,
-    portrait: adamNetworking,
+    portrait: img1,
     title1: "JOIN ADAM COHEN",
     title2: "PARTYING &",
     title3: "NETWORKING",
@@ -27,7 +28,7 @@ const slides = [
     id: 2,
     type: "taxes",
     bg: "bg-[#111111]",
-    portrait: adamSuit,
+    portrait: img2,
     title1: "YOU'RE PROBABLY",
     title2: "OVERPAYING IN TAXES",
     title3: "GET MY FREE \"7 TAX SECRETS\"",
@@ -39,7 +40,7 @@ const slides = [
     id: 3,
     type: "podcast",
     bg: "bg-[#0a0a0a]",
-    portrait: adamSuit,
+    portrait: img3,
     title1: "HAVE",
     title2: "ADAM COHEN",
     title3: "AS A GUEST ON YOUR",
@@ -51,7 +52,7 @@ const slides = [
     id: 4,
     type: "ads",
     bg: "bg-[#050505]",
-    portrait: adamOffice,
+    portrait: imgMM,
     title1: "GET 3 DONE-FOR-YOU",
     title2: "ADS FROM ADAM COHEN",
     title3: "WE'LL BEAT ANY AD YOU'VE RAN IN THE PAST",
