@@ -60,8 +60,8 @@ const Navbar = () => {
         animate={{ y: 0 }}
         transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
         className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${scrolled
-            ? "bg-background/90 backdrop-blur-xl border-b border-border/30 shadow-lg"
-            : "bg-background/40 backdrop-blur-md border-b border-border/10"
+          ? "bg-background/90 backdrop-blur-xl border-b border-border/30 shadow-lg"
+          : "bg-background/40 backdrop-blur-md border-b border-border/10"
           }`}
       >
         <div className="max-w-7xl mx-auto px-6 md:px-12 flex items-center justify-between h-20">
@@ -82,8 +82,8 @@ const Navbar = () => {
                   <Link
                     to={link.href}
                     className={`text-sm tracking-wide transition-colors duration-300 ${location.pathname === link.href
-                        ? "text-primary"
-                        : "text-muted-foreground hover:text-primary"
+                      ? "text-primary"
+                      : "text-muted-foreground hover:text-primary"
                       }`}
                   >
                     {link.label}
@@ -113,8 +113,8 @@ const Navbar = () => {
                               key={sub.href}
                               to={sub.href}
                               className={`px-4 py-3 rounded-xl text-sm transition-all duration-300 flex items-center justify-between group/item ${location.pathname === sub.href
-                                  ? "bg-primary/10 text-primary"
-                                  : "text-muted-foreground hover:bg-primary/5 hover:text-primary"
+                                ? "bg-primary/10 text-primary"
+                                : "text-muted-foreground hover:bg-primary/5 hover:text-primary"
                                 }`}
                             >
                               <span>{sub.label}</span>

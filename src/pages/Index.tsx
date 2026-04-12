@@ -12,8 +12,8 @@ import PageTransition from "@/components/PageTransition";
 const Index = () => (
   <PageTransition>
     <HeroSection />
-    <AboutSection />
     <StatsSection />
+    <AboutSection />
 
     <ServicesSection />
     <ProjectsSection />

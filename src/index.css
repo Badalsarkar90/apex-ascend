@@ -109,12 +109,18 @@
     font-family: var(--font-body);
   }
 
-  h1, h2, h3, h4, h5, h6 {
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
     font-family: var(--font-display);
   }
 
   html {
-    scroll-behavior: auto; /* Lenis handles smooth scrolling */
+    scroll-behavior: auto;
+    /* Lenis handles smooth scrolling */
   }
 }
 
@@ -167,5 +173,45 @@
 @layer utilities {
   .text-balance {
     text-wrap: balance;
+  }
+
+  .text-stroke-white {
+    -webkit-text-stroke: 1.5px white;
+    paint-order: stroke fill;
+  }
+
+  .text-stroke-black {
+    -webkit-text-stroke: 1.5px black;
+    paint-order: stroke fill;
+  }
+
+  .marketing-red-gradient {
+    background: linear-gradient(180deg, #ff3b3b 0%, #a30000 100%);
+    @apply bg-clip-text text-transparent;
+  }
+
+  .marketing-red-bg {
+    background: linear-gradient(180deg, #ff3b3b 0%, #a30000 100%);
+  }
+
+  .mask-hexagon {
+    clip-path: polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%);
+  }
+
+  .mask-arrow-right {
+    clip-path: polygon(0% 0%, 85% 0%, 100% 50%, 85% 100%, 0% 100%);
+  }
+
+  .mask-sharp-cut {
+    clip-path: polygon(0 0, 100% 0, 85% 100%, 0 100%);
+  }
+
+  .text-glow-yellow {
+    text-shadow: 0 0 15px rgba(255, 255, 0, 0.5);
+  }
+
+  .bg-black-box {
+    background-color: black;
+    @apply px-2 py-1;
   }
 }
