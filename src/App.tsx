@@ -20,6 +20,17 @@ import InsightsPage from "./pages/InsightsPage";
 import InsightDetailPage from "./pages/InsightDetailPage";
 import MediaPage from "./pages/MediaPage";
 import BookingPage from "./pages/BookingPage";
+import RealEstatePage from "./pages/RealEstatePage";
+import CohenTVPage from "./pages/CohenTVPage";
+import BusinessConciergePage from "./pages/BusinessConciergePage";
+import BusinessBrainstormPage from "./pages/BusinessBrainstormPage";
+import WebDevelopmentPage from "./pages/WebDevelopmentPage";
+import MobileAppPage from "./pages/MobileAppPage";
+import HardMoneyPage from "./pages/HardMoneyPage";
+import PrivateEquityPage from "./pages/PrivateEquityPage";
+import SmashMortgagePage from "./pages/SmashMortgagePage";
+import WeeklyZoomPage from "./pages/WeeklyZoomPage";
+import LiveEventsPage from "./pages/LiveEventsPage";
 import NotFound from "./pages/NotFound";
 import { useEffect, useState, useCallback } from "react";
 
@@ -48,6 +59,17 @@ const AppRoutes = () => {
         <Route path="/insights/:id" element={<InsightDetailPage />} />
         <Route path="/media" element={<MediaPage />} />
         <Route path="/book" element={<BookingPage />} />
+        <Route path="/real-estate" element={<RealEstatePage />} />
+        <Route path="/cohen-tv" element={<CohenTVPage />} />
+        <Route path="/business-concierge" element={<BusinessConciergePage />} />
+        <Route path="/business-brainstorm" element={<BusinessBrainstormPage />} />
+        <Route path="/web-development" element={<WebDevelopmentPage />} />
+        <Route path="/mobile-app-development" element={<MobileAppPage />} />
+        <Route path="/real-estate/hard-money" element={<HardMoneyPage />} />
+        <Route path="/real-estate/private-equity" element={<PrivateEquityPage />} />
+        <Route path="/real-estate/smash-mortgage" element={<SmashMortgagePage />} />
+        <Route path="/business-brainstorm/weekly-zoom" element={<WeeklyZoomPage />} />
+        <Route path="/business-brainstorm/live-events" element={<LiveEventsPage />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
     </AnimatePresence>
